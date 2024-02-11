@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea
+*.log
+*.bar
+/dev_integration_server
+ssl
+*.jks
+*.p12

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmMSLMapping.msgnode="ComIbmMSLMapping.msgnode" xmlns:ComIbmPassthru.msgnode="ComIbmPassthru.msgnode" xmlns:ComIbmRoute.msgnode="ComIbmRoute.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:mbmonitor="http://www.ibm.com/wbi/2008/eflow_mbmonitor" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="sk/refactorit/logging/Logger.subflow" nsPrefix="sk_refactorit_logging_Logger.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true" nodeLayoutStyle="RECTANGLE">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.isDebugEnabled" name="isDebugEnabled" lowerBound="1" defaultValueLiteral="true">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="Logger" bundleName="sk/refactorit/logging/Logger" pluginId="WhatsappEventReceiver"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/WhatsappEventReceiver/icons/full/obj16/Logger.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/WhatsappEventReceiver/icons/full/obj30/Logger.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="20,20">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="sk/refactorit/logging/Logger" pluginId="WhatsappEventReceiver"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="729,48">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="sk/refactorit/logging/Logger" pluginId="WhatsappEventReceiver"/>
+      </nodes>
+      <nodes xmi:type="ComIbmPassthru.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="503,130">
+        <translation xmi:type="utility:ConstantString" string="Pass through"/>
+        <monitorEvents eventSourceDescription="In terminal" eventSourceName="Pass through.terminal.in" eventIdentity="Pass through.InTerminal">
+          <eventXMLDoc xmi:type="mbmonitor:MonitorEvent">
+            <applicationData dataLocation="$ExceptionList" isXPath="true" complexData="true"/>
+            <applicationData dataLocation="$Environment" isXPath="true" complexData="true"/>
+            <applicationData dataLocation="$LocalEnvironment" isXPath="true" complexData="true"/>
+            <applicationData dataLocation="$Root/HTTPInputHeader" isXPath="true" complexData="true"/>
+            <applicationData dataLocation="$Root/JSON/Data" isXPath="true" complexData="true"/>
+            <globalTransactionCorrelator/>
+            <parentTransactionCorrelator/>
+            <localTransactionCorrelator/>
+            <bitStreamData encoding="none" bitstreamContent="none"/>
+            <eventName literal="Pass through.InTerminal"/>
+            <eventFilter dataLocation="true()" isXPath="true"/>
+          </eventXMLDoc>
+        </monitorEvents>
+      </nodes>
+      <nodes xmi:type="ComIbmRoute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="284,45">
+        <outTerminals terminalNodeID="Match" dynamic="true" label="Match"/>
+        <translation xmi:type="utility:ConstantString" string="Route"/>
+        <filterTable filterPattern="$Environment/Variables/isDebugEnabled = 'true'" routingOutputTerminal="Match"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMSLMapping.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="14,92" mappingExpression="msl://{sk.refactorit.logging}#Logger_Extract_IsDebugEnabled">
+        <translation xmi:type="utility:ConstantString" string="Extract IsDebugEnabled"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_2" sourceTerminalName="Match" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.default" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_3" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.isDebugEnabled">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.isDebugEnabled" bundleName="sk/refactorit/logging/Logger" pluginId="WhatsappEventReceiver"/>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WhatsappEventReceiver",
+    "version": "1.0.0",
+    "description": "WhatsappEventReceiver"
+  },
+  "servers": [
+    {
+      "url": "/whatsappeventreceiver/v1"
+    }
+  ],
+  "paths": {
+    "/webhooks": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "hub.mode",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hub.challenge",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "hub.verify_token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ReceivedMessage": {
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "entry": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "changes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "object",
+                        "properties": {
+                          "messaging_product": {
+                            "type": "string"
+                          },
+                          "metadata": {
+                            "type": "object",
+                            "properties": {
+                              "display_phone_number": {
+                                "type": "string"
+                              },
+                              "phone_number_id": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "display_phone_number",
+                              "phone_number_id"
+                            ]
+                          },
+                          "contacts": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "profile": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "name"
+                                  ]
+                                },
+                                "wa_id": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "profile",
+                                "wa_id"
+                              ]
+                            }
+                          },
+                          "messages": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "timestamp": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "properties": {
+                                    "body": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "body"
+                                  ]
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "id",
+                                "timestamp",
+                                "text",
+                                "type"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "messaging_product",
+                          "metadata",
+                          "contacts",
+                          "messages"
+                        ]
+                      },
+                      "field": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "field"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "changes"
+              ]
+            }
+          }
+        },
+        "required": [
+          "object",
+          "entry"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+---
+ResourceManagers:
+  JVM:
+    keystoreType: 'PKCS12'
+    keystoreFile: '/home/aceuser/keystore.p12'
+    keystorePass: 'insert me'
+  HTTPSConnector:
+    ReqClientAuth: 'false'
+Events:
+  BusinessEvents:
+    File:
+      enabled: true
+      outputFormat: 'xml'
+Monitoring:
+  MessageFlow:
+    publicationOn: 'active'

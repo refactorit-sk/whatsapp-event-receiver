@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <inlinedXMLSchema><![CDATA[<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="hub.mode" type="xsd:string"/>
+    <xsd:element name="hub.verify_token" type="xsd:string"/>
+    <xsd:element name="hub.challenge" type="xsd:string"/>
+</xsd:schema>]]></inlinedXMLSchema>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/BlobMessage.xsd" var="var"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var1"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var4"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var5"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="getWebhooks_Bad_Request_Mapping">
+        <input derivedFrom="MB:JSON_operation_name:getWebhooks" path="$var/mb:msg(BLOB,assembly,BLOB,Properties,LocalEnvironment)" var="ComIbmMessageAssembly_BLOB">
+            <cast derivedFrom="MB:JSON_path_query_parm:hub.mode" path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/REST/Input/Parameters/any" qualifier="hub.mode" ref="var1"/>
+            <cast derivedFrom="MB:JSON_path_query_parm:hub.verify_token" path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/REST/Input/Parameters/any" qualifier="hub.verify_token" ref="var1"/>
+            <cast derivedFrom="MB:JSON_path_query_parm:hub.challenge" path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/REST/Input/Parameters/any" qualifier="hub.challenge" ref="var1"/>
+        </input>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var4/mb:msg(JSON,assembly,JSON,LocalEnvironment,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_operation_response" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}ErrorResponse" ref="var5"/>
+        </output>
+        <task type="info">
+            <documentation description="The REST API input data of operation getWebhooks.">This Task is provided to show the location of the REST API input data of operation getWebhooks.
+The path and query parameters are provided under "Parameters".
+You may need to use these as inputs to your mappings.</documentation>
+            <input path="$ComIbmMessageAssembly_BLOB/LocalEnvironment/REST/Input"/>
+        </task>
+        <move>
+            <input path="$ComIbmMessageAssembly_BLOB/Properties"/>
+            <output path="$MessageAssembly/Properties"/>
+        </move>
+        <assign value="Incorrect verification token">
+            <output path="$MessageAssembly/JSON/spath('Data',2)/message"/>
+        </assign>
+        <assign value="400">
+            <output path="$MessageAssembly/LocalEnvironment/Destination/HTTP/ReplyStatusCode"/>
+        </assign>
+    </mappingDeclaration>
+</mappingRoot>
