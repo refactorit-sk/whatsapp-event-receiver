@@ -1,0 +1,3 @@
+# Overrides
+postWebhooks#Trace.filePath=/home/aceuser/WhatsappEventReceiver.log
+gen_WhatsappEventReceiver#HTTP Input.useHTTPS=true
